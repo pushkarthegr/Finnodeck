@@ -1,0 +1,100 @@
+<html>
+    <head>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+        <title>Finnodeck - Compounder</title>
+        <link rel="icon" href="title_icon.png" type="image/png">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="style.css">
+
+    </head>
+    <body>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #1E1E1E;">
+        <a class="navbar-brand" href="#"><img src="PP_lo.png" width="250em"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link clicked" href="#">Compounding</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="inf.html">Inflation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="depriciation.html">Depriciation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cagr.html">CAGR</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="compare_return.html">Compare Returns</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Adviser</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">News</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+          <div class="dibba">
+            <center>
+            <h2>Compounding Calculator</h2>
+            <div class="idks">
+            <div class="idk">
+            <div class="data">
+              <p>Amount you can invest today</p>
+              <label class="left_input">₹</label><input type="number" id="amount_invest" value="5000" onchange="number_input('amount_invest')" oninput="kaatle('amount_invest')" class="form-control dr">
+            </div>
+            <div class="data">
+              <p>Amount you want to invest</p>
+              <label class="left_input">₹</label><input type="number" id="amount_invest_invest" value="0" onchange="number_input_second('amount_invest_invest')" oninput="kaatle('amount_invest_invest')" class="form-control dr">
+            </div>
+            <div class="data">
+              <p>Number of years you want to invest</p>
+              <x>Yrs</x><input type="number" id="stay_invested_years_invest" value="5" onchange="number_input_years('stay_invested_years_invest')" oninput="kaatle('stay_invested_years_invest')"class="form-control yr dr">
+            </div>
+            <div class="data">
+              <p>Number of years you want to stay invested</p>
+              <x>Yrs</x><input type="number" id="stay_invested_years" value="5" onchange="number_input_years('stay_invested_years')" oninput="kaatle('stay_invested_years')"class="form-control yr dr">
+            </div>
+            <div class="data">
+              <p>Annual returns expected by you</p>
+              <label class="left_input">%</label><input type="number" id="percent_invest" value="8" onchange="percent('percent_invest')" oninput="kaatle('percent_invest')"class="form-control yr dr">
+            </div>
+              <div class="data">
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="yearly" checked>
+                  Yearly</label>
+                </div>
+                
+                <div class="form-check form-check-inline" style="margin-left:2px;">
+                  <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="monthly">
+                  Monthly</label>
+                </div>
+              </div>
+              <div class="data">
+                <button class="btn btn-themed" onclick="invest()">Calcuate</button>
+              </div>
+          </div>
+          <div class="chrt">
+            <p class="result">After <b id="result_years">5 years</b>, your investment of <b id="simple_amount">₹5000</b> will grow to <br><b id="result_amount_val">₹7934</b> <l id="annual_rates">@ 8% p.a</l></p>
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+      </center>
+        </div>
+          <script src="cod.js"></script>
+    </body>
+</html>

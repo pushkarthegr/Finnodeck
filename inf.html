@@ -1,0 +1,213 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+        <title>Finnodeck - Inflation</title>
+        <link rel="icon" href="title_icon.png" type="image/png">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="style.css">
+        <style>
+          .data+.data{
+            margin-top: 35px;
+          }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #1E1E1E;">
+            <a class="navbar-brand" href="#"><img src="PP_lo.png" width="250em"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="cal.html">Compounding</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link clicked" href="#">Inflation</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="depriciation.html">Depriciation</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="cagr.html">CAGR</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="compare_return.html">Compare Returns</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Adviser</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">News</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="dibba">
+            <center>
+                <h2>Inflation Calculator</h2>
+                <div class="idks">
+                    <div class="idk">
+                    <div class="data">
+                      <p>Current Cost</p>
+                      <label class="left_input">₹</label><input type="number" id="amount_putting" value="100" onchange="limit('amount_putting',1,100000000)" oninput="decimal_remove('amount_putting')"class="form-control dr">
+                    </div>
+                    <div class="data">
+                      <p>Years you want to test the inflation for</p>
+                      <x>Yrs</x><input type="number" id="years_stay" value="5" onchange="limit('years_stay',1,100)"oninput="decimal_remove('years_stay')"class="form-control yr dr">
+                    </div>
+                    <div class="data">
+                      <p>Inflation rate</p>
+                      <label class="left_input">%</label><input type="number" id="percent_stay" value="7" onchange="limit('percent_stay',1,30)" oninput="limited('percent_stay')"class="form-control yr dr">
+                    </div>
+                    <div class="data">
+                        <button class="btn btn-themed" submit onclick="checkInflation()">Calcuate</button>
+                      </div>
+                      </div>
+                      
+                  
+                  <div class="chrt">
+                    <p class="result_inflation">After <b id="result_years">5 years</b>, the purchasing power of <b id="amounts">₹100</b> will value <b id="backward">₹70</b> of today and if you want to buy a product which costs the same amount after the inputted time then it will cost <b id="forward">₹140</b> with inflation of <b id="infl">@ 7% p.a</b></p>
+                    <canvas id="myChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </center>
+          </div>
+          <script>
+const dict = {
+        8: 1,
+        7:10,
+        6:1,
+        5:10,
+        4:1,
+        3:100,
+        2:10,
+        1:1,
+        9:10,
+        10:100,
+        11:1000,
+        12:10000,
+        13:1,
+        14:10,
+        15:100,
+        16:1000,
+        17:10000,
+        18:100000,
+        19:1000000,
+        20:10000000,
+        21:100000000,
+        22:1000000000
+    };
+
+            myChart = document.getElementById("myChart").getContext('2d');
+            myChart.canvas.parentNode.style.width = '32em';
+
+            MYChart = new Chart(myChart,{
+              type:'doughnut',
+              data:{
+                labels:['Amount Increased','Current Cost'],
+              datasets:[{
+                label:'Inflation',
+                data:[40.26,"100"],
+              backgroundColor: [
+                '#7A63FF',
+                '#6656bf'
+              ]
+        }],
+    },
+    options:{/*responsive:true*/}
+
+});
+
+              store = 0;
+              function limit(ids,min,max){
+                //number limit to all the textboxes
+                texts = document.getElementById(ids).value;
+                if(texts<Number(min)){
+                    window.alert("The value should be between "+min+" and "+max+".");
+                    document.getElementById(ids).value = min;
+                }else if(texts>Number(max)){
+                    window.alert("The value should be between "+min+" and "+max+".");
+                    document.getElementById(ids).value = max;
+                }
+              }
+              function decimal_remove(ids){
+                //avoiding decimals in the following inputs
+                texts = document.getElementById(ids).value;
+                final_texts = texts.replace(".","");
+                document.getElementById(ids).value = final_texts;
+              }
+              function limited(ids){
+                //Stop inputting more after 3 d.p
+                num = document.getElementById(ids).value.split(".")[1];
+                if(num == null){
+                  console.log(":(");
+                }else if(document.getElementById(ids).value.split(".")[1].length==3){
+                    store = document.getElementById(ids).value;
+                  }else if(document.getElementById(ids).value.split(".")[1].length>3){
+                    document.getElementById(ids).value = store;
+                  }
+              }
+              function next_string(strin){
+                    nxt_string = "";
+                    num_rounded = Math.round(strin);
+                    num_length = num_rounded.toString().length;
+
+                    deci = num_rounded.toExponential().split('e').map(Number);
+                    semi = deci[0]*dict[num_length];
+                    console.log(strin);
+
+                    if(num_length == 4||num_length == 5){
+                      nxt_string = " Thousand";
+                    }else if(num_length == 6||num_length == 7){
+                      nxt_string = " Lakhs";
+                    }else if(num_length>=8&&num_length<13){
+                      nxt_string = " Cr";
+                    }else if(num_length>=13){
+                      nxt_string = " Lakh Cr";
+                    }else if(num_length<4){
+                      nxt_string = "";
+                    }
+                    final = Math.round((semi + Number.EPSILON) * 100) / 100+nxt_string;
+                    return final;
+              }
+              function checkInflation(){
+                //defiening Variables
+                years = Number(document.getElementById('years_stay').value);
+                percentage = Number(document.getElementById('percent_stay').value)/100;
+                paisa = Number(document.getElementById('amount_putting').value);
+                
+                //Calculating future price
+                first_step = 1+percentage;
+                second_step = first_step**years;
+                third_step = paisa*second_step;
+
+                //calculating the value
+                firstStep = 1-percentage;
+                secondStep = firstStep**years;
+                thirdStep = paisa*secondStep;
+
+                //Showing the answers
+                document.getElementById('result_years').innerHTML = years+" years";
+                document.getElementById('amounts').innerHTML = "₹"+next_string(paisa);
+                document.getElementById('backward').innerHTML = "₹"+next_string(thirdStep);
+                document.getElementById('forward').innerHTML = "₹"+next_string(third_step);
+                document.getElementById('infl').innerHTML = "@ "+document.getElementById('percent_stay').value+"% p.a";
+
+                //Making Chart
+                MYChart.data.datasets[0].data[1] = paisa;
+                MYChart.data.datasets[0].data[0] = third_step-paisa;
+                MYChart.update();
+              }
+          </script>
+    </body>
+</html>
